@@ -2,7 +2,12 @@
 name = "hello_remote_world"
 version = "0.1.0"
 authors = ["VS Code <vscode@microsoft.com>"]
+edition = "2018"
 
 [lib]
 path ="./src/lib/lib.rs"
 
+[dependencies]
+rweb = { version = "0.6", features = ["openapi"] }
+serde = "1"
+tokio = "1"

@@ -1,9 +1,27 @@
-/*--------------------------------------------------------------------------------------------------------------
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License. See https://go.microsoft.com/fwlink/?linkid=2090316 for license information.
- *-------------------------------------------------------------------------------------------------------------*/
+use rweb::*;
+use serde::{Serialize, Deserialize};
 
-fn main() {
-    let name = "VS Code Remote - Containers";
-    println!("Hello, {}!", name);
+#[get("/output")]
+fn output() -> String {
+    String::from("this returns 200 with text/plain mime type")
+}
+
+#[derive(Debug, Serialize, Deserialize, Schema)]
+struct Product {
+    id: String,
+    title: String,
+}
+
+#[get("/products")]
+fn products() -> &'static str {
+    "Hello, World!"
+}
+
+#[tokio::main]
+async fn main() {
+    let routes = rweb::get().and(
+        products()
+    );
+
+    rweb::serve(routes).run(([127, 0, 0, 1], 3030)).await;
 }
